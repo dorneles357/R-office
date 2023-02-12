@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  rstudio:
+    build:
+      context: ./
+      dockerfile: dockerfile-rstudio
+    container_name: r-office
+    ports:
+      - "8787:8787"
+    environment:
+      - DISABLE_AUTH=true
+    volumes:
+      - ./.rstudio_config:/home/rstudio/.config/rstudio
+      - ./:/home/rstudio/workspace
+      - /data:/data
