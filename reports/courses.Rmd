@@ -21,7 +21,7 @@ data <- data %>% janitor::clean_names()
 dplyr::glimpse(data)
 ```
 
-## 1. Distribuicão dos  cusrso superiores por grau 
+## 1. Distribuicão dos cusrso superiores por grau
 
 ### 1. 1 Distribuição absoluta de cursos por grau
 
