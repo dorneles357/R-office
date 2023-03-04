@@ -1,0 +1,72 @@
+### cursos de graduação de universidades do brasil - 2022
+
+```{r include=FALSE}
+if (!require(pacman)) install.packages('pacman')
+library(pacman)
+
+pacman::p_load(dplyr, readr, janitor, ggplot2, scales)
+```
+
+```{r include=FALSE}
+url <- "https://dadosabertos.mec.gov.br/images/conteudo/Ind-ensino-superior/2022//PDA_Dados_Cursos_Graduacao_Brasil.csv"
+
+data <- readr::read_csv(url)
+
+data <- data %>% janitor::clean_names()
+```
+
+### Estrutura do banco de dados
+
+```{r}
+dplyr::glimpse(data)
+```
+
+## 1. Distribuicão dos  cusrso superiores por grau 
+
+### 1. 1 Distribuição absoluta de cursos por grau
+
+```{r}
+abs_course_grau <- table(data$grau)
+
+abs_course_grau
+```
+
+### 1. 2 Distribuição relativa de cursos por grau
+
+```{r}
+prop.table(abs_course_grau) * 100 
+```
+
+### 1.3 Gráfico de barras
+
+```{r}
+ggplot2::ggplot(data, aes(grau)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  scale_y_continuous(labels = percent) +
+  labs(title = '% de cursos de ensino superior por grau - 2021', y = '% de cursos')
+```
+
+## 2. Distribuicão dos curso supeiores por modalidade
+
+### 2.1 Distribuicão absoluta dos cursos superiores por modalidade
+
+```{r}
+abs_type_course <- table(data$modalidade)
+
+abs_type_course
+```
+
+### 2.2 Distribuicão relativa dos cursos superiores por modalidade
+
+```{r}
+prop.table(abs_type_course) * 100
+```
+
+### 2.3 Gráfico de barras
+
+```{r}
+ggplot2::ggplot(data, aes(modalidade, fill = grau)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  scale_y_continuous(labels = percent) +
+  labs(title = '% de cursos de ensino superior por modalidade - 2021', y = '% de cursos')
+```
